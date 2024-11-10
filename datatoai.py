@@ -6,7 +6,7 @@
 
 def fillTheArray(arrayName, idTag):
     try:
-        ids = mw.col.find_cards(str(idTag))
+        ids = mw.col.find_cards(idTag)
         for id in ids:
             if id not in arrayName:
                 arrayName += id
@@ -18,7 +18,7 @@ def unfillTheArray(arrayName, idTag):
         unfillCounter=0
         arrayLength = len(arrayName)
         for arrayLength in arrayName:
-            if mw.col.get_card_id(arrayName[unfillCounter]) == "tag:due":
+            if mw.col.get_card_id(arrayName[unfillCounter]) == idTag:
                 arrayName.pop(unfillCounter)
                 unfillCounter-=1
             unfillCounter+=1
@@ -27,15 +27,17 @@ def unfillTheArray(arrayName, idTag):
 
 
 def tooMuchStudy():
+    global currentWords
     currentWords = []
+    global fillerWords
     fillerWords = []
-    fillTheArray(currentWords, "learning") # "tag:due" / "tag: due" / "due" / others? test w/ showInfo("")
-    fillTheArray(currentWords, "relearning")
-    fillTheArray(currentWords, "done")
-    fillTheArray(currentWords, "mature")
-    fillTheArray(fillerWords, "young")
-    fillTheArray(fillerWords, "mature")
-    unfillTheArray(fillerWords, "due")
+    fillTheArray(currentWords, "tag:learning")
+    fillTheArray(currentWords, "tag:relearning")
+    fillTheArray(currentWords, "tag:done")
+    fillTheArray(currentWords, "tag:mature")
+    fillTheArray(fillerWords, "tag:young")
+    fillTheArray(fillerWords, "tag:mature")
+    unfillTheArray(fillerWords, "is:due")
 
 def senddata(card1, card2, card3):
     sentvalue = str(card1) + ", " + str(card2) + ", " + str(card3)
@@ -61,7 +63,6 @@ if len(currentWords) == 0:
     tooMuchStudy()
 word3 = currentWords[0]
 currentWords.pop(0)
-
 
 
 senddata(word1, word2, word3)
