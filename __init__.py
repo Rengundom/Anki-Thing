@@ -49,18 +49,10 @@ def getAPIKey():
         else:
             getAPIKey()
     
-count=0
 def testFunction(reviewer) -> None:
-    global count
     if(SentenceLearnerEnabled):
-        count+=1
-        card = mw.reviewer.card
-        note = card.note()
-        field_text = note.fields[0]
-        if(count==3):
-            count=0
-        elif(count==1):
-            QTimer.singleShot(100, lambda:displaySentence(highlight(get_sentence(senddata(), tooMuchStudyFiller()), senddata())))
+        theData = senddata()
+        QTimer.singleShot(100, lambda:displaySentence(highlight(get_sentence(theData, tooMuchStudyFiller()), theData)))
 
 
 # This just makes the typing easier and number of lines nicer.

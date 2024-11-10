@@ -1,5 +1,6 @@
 import sys
 import os
+#from aqt.utils import showInfo
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "lib"))
 
@@ -15,9 +16,12 @@ def get_sentence(words, reserve_list):
     genai.configure(api_key=f.read())
 
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
-    reserve_list = ", ".join(reserve_list)
+    reserve_list2 = str(reserve_list)
+    #showInfo(words)
+    
+    
     response = model.generate_content(
-        "Create a sentence that must include the words " + words + ". These words may be anywhere in the sentence an in any order, but must me present. If possible, construct a Subject-Verb-Object sentence. If a clear SVO sentence cannot be formed, try a Subject-Verb-Adjective sentence. Only if neither of these basic structures works should you add words from this list [" + reserve_list + "] to create a grammatically correct and easy-to-understand sentence up to 20 words. Avoid unusual or nonsensical combinations of words, and create realistic scenarios that use the required words in a way that would make sense even to a person unfamiliar with the English language. The sentence should be basic and suitable for a beginner English learner.",          
+        "Create a sentence that must include the words " + str(words) + ". These words may be anywhere in the sentence an in any order, but must be present. If possible, construct a Subject-Verb-Object sentence. If a clear SVO sentence cannot be formed, try a Subject-Verb-Adjective sentence. Only if neither of these basic structures works should you add words from this list " + reserve_list2 + " to create a grammatically correct and easy-to-understand sentence up to 20 words. Avoid unusual or nonsensical combinations of words, and create realistic scenarios that use the required words in a way that would make sense even to a person unfamiliar with the English language. The sentence should be basic and suitable for a beginner English learner.",          
         safety_settings={
             HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
             HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,

@@ -1,16 +1,19 @@
 #import anki
 #import json
-
+from aqt.utils import showInfo
+from aqt import mw
 
 def fillTheArray(idTag):
     temp = []
-    try:
-        ids = mw.col.find_cards(idTag)
-        for id in ids:
-            if id not in temp:
-                temp.append(id.fields[0])
-    except:
-        pass
+
+    ids = mw.col.find_cards(idTag)
+    if len(ids) == 0:
+        return ""
+    #showInfo(f'fillArray find ids of {idTag} {str(ids)}')
+    for id in ids:
+        card = mw.col.get_card(id)
+        temp.append(card.question())
+    #showInfo(f'fillArray: {idTag}, {str(temp)}')
     return temp
 
 def unfillTheArray(arrayName, idTag):
@@ -28,28 +31,30 @@ def unfillTheArray(arrayName, idTag):
 
 def tooMuchStudyCurrent():
     toomp = []
-    toomp.append(fillTheArray("learning"))
-    toomp.append(fillTheArray("relearning"))
-    toomp.append(fillTheArray("done"))
-    toomp.append(fillTheArray("mature"))
+    toomp += (fillTheArray("is:learn"))
+    toomp += (fillTheArray("is:review"))
+    toomp += (fillTheArray("is:new"))
+    
     return toomp
 
 def tooMuchStudyFiller():
     femp = []
-    femp += fillTheArray("young")
-    femp += fillTheArray("mature")
-    unfillTheArray(femp, "is:due")
+    femp += fillTheArray("rated:1") #Words already studied that day
+    femp += fillTheArray("is:buried") #Words already well known
+    unfillTheArray(femp, "prop:due=0") #Function has no return
+    
     return femp
 
 
 def senddata():
     currentWords = []
     currentWords += tooMuchStudyCurrent()
+    #showInfo(f"Current Words: {str(currentWords)}")
     word1 = currentWords[0]
     currentWords.pop(0)
     word2 = currentWords[0]
     currentWords.pop(0)
     word3 = currentWords[0]
     currentWords.pop(0)
-    return str(f"{word1}, {word2}, {word3}")
+    return [word1,word2,word3]
 
