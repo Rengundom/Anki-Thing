@@ -68,7 +68,7 @@ def unfillTheArray(arrayName, idTag):
         unfillCounter=0
         arrayLength = len(arrayName)
         for arrayLength in arrayName:
-            if mw.col.get_card_id(arrayName[unfillCounter]) == "tag:due":
+            if mw.col.get_card_id(arrayName[unfillCounter]) == idTag:
                 arrayName.pop(unfillCounter)
                 unfillCounter-=1
             unfillCounter+=1
@@ -92,7 +92,7 @@ fillTheArray(currentWords, "tag:done")
 fillTheArray(currentWords, "tag:mature")
 fillTheArray(fillerWords, "tag:young")
 fillTheArray(fillerWords, "tag:mature")
-unfillTheArray(fillerWords, "tag:due")
+unfillTheArray(fillerWords, "is:due")
 
 
 
