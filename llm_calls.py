@@ -1,7 +1,7 @@
 import sys
 import os
 
-sys.path.insert(0, "C:/Users/rengu/AppData/Roaming/Anki2/addons21/Anki-Thing/lib")
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "lib"))
 
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import google.generativeai as genai

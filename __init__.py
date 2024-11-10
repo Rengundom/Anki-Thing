@@ -1,5 +1,7 @@
 from .GUI_Panels import displaySentence
 from .highlight import highlight
+from .llm_calls import get_sentence
+from .datatoai import fillTheArray, unfillTheArray, senddata, tooMuchStudyFiller
 from aqt import mw, gui_hooks
 from aqt.utils import showInfo, qconnect, QDialog, Qt, QMessageBox, QDesktopServices, QUrl,QPushButton, QLineEdit, QVBoxLayout
 from aqt.qt import *
@@ -7,6 +9,7 @@ import os
 
 
 SentenceLearnerEnabled=True
+
 
 def toggleLearner():
     global SentenceLearnerEnabled
@@ -17,10 +20,12 @@ def toggleLearner():
         SentenceLearnerEnabled=True
         showInfo(f"The sentence learner is enabled!")
 
+
+
+
+
 def getAPIKey():
     if os.path.exists(os.path.join(os.path.dirname(__file__), ".env")):
-       f = open(os.path.join(os.path.dirname(__file__), ".env"), "r")
-       showInfo(f.read())
        pass
     else:
         popUp=QDialog()
@@ -44,36 +49,22 @@ def getAPIKey():
         else:
             getAPIKey()
     
-
+count=0
 def testFunction(reviewer) -> None:
+    global count
     if(SentenceLearnerEnabled):
+        count+=1
         card = mw.reviewer.card
         note = card.note()
         field_text = note.fields[0]
-        QTimer.singleShot(100, lambda:displaySentence(highlight("子供が大嫌いだよ！僕は犬を殺す", ["犬","大嫌い", "カッコいい"])))
+        if(count==3):
+            count=0
+        elif(count==1):
+            QTimer.singleShot(100, lambda:displaySentence(highlight(get_sentence(senddata(), tooMuchStudyFiller()), senddata())))
 
 
 # This just makes the typing easier and number of lines nicer.
-def fillTheArray(arrayName, idTag):
-    try:
-        ids = mw.col.find_cards(str(idTag))
-        for id in ids:
-            if id not in arrayName:
-                arrayName += id
-    except:
-        pass
 
-def unfillTheArray(arrayName, idTag):
-    try:
-        unfillCounter=0
-        arrayLength = len(arrayName)
-        for arrayLength in arrayName:
-            if mw.col.get_card_id(arrayName[unfillCounter]) == idTag:
-                arrayName.pop(unfillCounter)
-                unfillCounter-=1
-            unfillCounter+=1
-    except:
-        pass
 
         
 # Rebecca's addition. I'm making a global array so that it can be accessed by a file later.
@@ -82,17 +73,6 @@ def unfillTheArray(arrayName, idTag):
 # gets filled once rather than every single time that the AI pull request requests some words.
 
 
-global currentWords
-currentWords = []
-global fillerWords
-fillerWords = []
-fillTheArray(currentWords, "tag:learning")
-fillTheArray(currentWords, "tag:relearning")
-fillTheArray(currentWords, "tag:done")
-fillTheArray(currentWords, "tag:mature")
-fillTheArray(fillerWords, "tag:young")
-fillTheArray(fillerWords, "tag:mature")
-unfillTheArray(fillerWords, "is:due")
 
 
 
