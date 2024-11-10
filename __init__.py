@@ -5,6 +5,7 @@ from aqt.utils import showInfo, qconnect, QDialog, Qt, QMessageBox, QDesktopServ
 from aqt.qt import *
 import os
 
+
 SentenceLearnerEnabled=True
 
 def toggleLearner():
@@ -43,20 +44,6 @@ def getAPIKey():
         else:
             getAPIKey()
     
-# This just makes the typing easier and number of lines nicer.
-def fillTheArray(arrayName, idTag):
-    ids = mw.col.find_cards(str(idTag))
-    for id in ids:
-        if id not in arrayName:
-            arrayName += id
-def unfillTheArray(arrayName, idTag):
-    unfillCounter=0
-    arrayLength = len(arrayName)
-    for arrayLength in arrayName:
-        if mw.col.get_card_id(arrayName[unfillCounter]) == "tag:due":
-            arrayName.pop(unfillCounter)
-            unfillCounter-=1
-        unfillCounter+=1
 
 def testFunction(reviewer) -> None:
     if(SentenceLearnerEnabled):
@@ -64,6 +51,29 @@ def testFunction(reviewer) -> None:
         note = card.note()
         field_text = note.fields[0]
         QTimer.singleShot(100, lambda:displaySentence(highlight("すごい！あなたはとてもカッコいいだよ！でも、あなたの犬が大嫌いだよ！", ["犬","大嫌い", "カカッコいい"])))
+
+
+# This just makes the typing easier and number of lines nicer.
+def fillTheArray(arrayName, idTag):
+    try:
+        ids = mw.col.find_cards(str(idTag))
+        for id in ids:
+            if id not in arrayName:
+                arrayName += id
+    except:
+        pass
+
+def unfillTheArray(arrayName, idTag):
+    try:
+        unfillCounter=0
+        arrayLength = len(arrayName)
+        for arrayLength in arrayName:
+            if mw.col.get_card_id(arrayName[unfillCounter]) == "tag:due":
+                arrayName.pop(unfillCounter)
+                unfillCounter-=1
+            unfillCounter+=1
+    except:
+        pass
 
         
 # Rebecca's addition. I'm making a global array so that it can be accessed by a file later.
@@ -76,7 +86,7 @@ global currentWords
 currentWords = []
 global fillerWords
 fillerWords = []
-fillTheArray(currentWords, "tag:learning") # "tag:due" / "tag: due" / "due" / others? test w/ showInfo("")
+fillTheArray(currentWords, "tag:learning")
 fillTheArray(currentWords, "tag:relearning")
 fillTheArray(currentWords, "tag:done")
 fillTheArray(currentWords, "tag:mature")
