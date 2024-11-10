@@ -1,17 +1,17 @@
 import sys
 import os
 
-sys.path.insert(0, "C:/Users/Hot Chocfee/AppData/Roaming/Anki2/addons21/Anki-Thing/lib")
+sys.path.insert(0, "C:/Users/realc/AppData/Roaming/Anki2/addons21/BasicTest/lib")
 
 import google.generativeai as genai
 from dotenv import load_dotenv
 
 #load env for api key
-load_dotenv()
 
 # words is a string containing the three words to be used in format "'word1', 'word2', 'word3'"
 # reserve_list is a string list containing all young and mature words 
 def get_sentence(words, reserve_list):
+    load_dotenv()
     genai.configure(api_key=os.environ.get("api_key"))
 
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
@@ -23,6 +23,7 @@ def get_sentence(words, reserve_list):
 
 # Translate an input string into English
 def translate(sentence):
+    load_dotenv()
     genai.configure(api_key=os.environ.get("api_key"))
 
     model = genai.GenerativeModel(model_name="gemini-1.5-flash")
