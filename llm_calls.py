@@ -1,7 +1,7 @@
 import sys
 import os
 
-sys.path.insert(0, "C:/Users/realc/AppData/Roaming/Anki2/addons21/BasicTest/lib")
+sys.path.insert(0, "C:/Users/Hot Chocfee/AppData/Roaming/Anki2/addons21/Anki-Thing/lib")
 
 import google.generativeai as genai
 from dotenv import load_dotenv
