@@ -5,19 +5,26 @@
 #global fillerWords
 
 def fillTheArray(arrayName, idTag):
-    ids = mw.col.find_cards(str(idTag))
-    for id in ids:
-        if id not in arrayName:
-            arrayName += id
+    try:
+        ids = mw.col.find_cards(str(idTag))
+        for id in ids:
+            if id not in arrayName:
+                arrayName += id
+    except:
+        pass
 
 def unfillTheArray(arrayName, idTag):
-    unfillCounter=0
-    arrayLength = len(arrayName)
-    for arrayLength in arrayName:
-        if mw.col.get_card_id(arrayName[unfillCounter]) == "due":
-            arrayName.pop(unfillCounter)
-            unfillCounter-=1
-        unfillCounter+=1
+    try:
+        unfillCounter=0
+        arrayLength = len(arrayName)
+        for arrayLength in arrayName:
+            if mw.col.get_card_id(arrayName[unfillCounter]) == "tag:due":
+                arrayName.pop(unfillCounter)
+                unfillCounter-=1
+            unfillCounter+=1
+    except:
+        pass
+
 
 def tooMuchStudy():
     currentWords = []
