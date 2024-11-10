@@ -63,7 +63,7 @@ def testFunction(reviewer) -> None:
         card = mw.reviewer.card
         note = card.note()
         field_text = note.fields[0]
-        QTimer.singleShot(100, lambda:displaySentence(highlight("すごい！あなたはとてもカッコいいだよ！でも、あなたの犬が大嫌いだよ！", ["犬","大嫌い", "カカッコいい"])))
+        QTimer.singleShot(100, lambda:displaySentence(highlight("すごい！あなたはとてもカッコいいだよ！でも、あなたの犬が大嫌いだよ！", ["犬","大嫌い", "カッコいい"])))
 
         
 # Rebecca's addition. I'm making a global array so that it can be accessed by a file later.
