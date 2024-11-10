@@ -63,5 +63,5 @@ word3 = currentWords[0]
 currentWords.pop(0)
 
 
-
+showinfo(str(word1, word2, word3))
 senddata(word1, word2, word3)
