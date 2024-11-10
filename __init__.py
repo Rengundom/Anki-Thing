@@ -39,7 +39,7 @@ def getAPIKey():
 
         if popUp.exec() == QDialog.DialogCode.Accepted:
             f = open(os.path.join(os.path.dirname(__file__), ".env"), "x")
-            f.write(f"api_key={apiKey.text()}")
+            f.write(apiKey.text())
             
         else:
             getAPIKey()
@@ -50,7 +50,7 @@ def testFunction(reviewer) -> None:
         card = mw.reviewer.card
         note = card.note()
         field_text = note.fields[0]
-        QTimer.singleShot(100, lambda:displaySentence(highlight("すごい！あなたはとてもカッコいいだよ！でも、あなたの犬が大嫌いだよ！", ["犬","大嫌い", "カッコいい"])))
+        QTimer.singleShot(100, lambda:displaySentence(highlight("子供が大嫌いだよ！僕は犬を殺す", ["犬","大嫌い", "カッコいい"])))
 
 
 # This just makes the typing easier and number of lines nicer.

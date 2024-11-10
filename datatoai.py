@@ -65,4 +65,5 @@ word3 = currentWords[0]
 currentWords.pop(0)
 
 
+
 senddata(word1, word2, word3)
